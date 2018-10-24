@@ -5,7 +5,6 @@ namespace TournamentLib
     public class Round
     {
         private List<Match> matches = new List<Match>();
-        private Match match = new Match();
         
         public void AddMatch(Match m)
         {
@@ -17,7 +16,8 @@ namespace TournamentLib
             Match getMatch = matches[0];
             for (int i = 0; i < matches.Count; i++)
             {
-                if(teamName1 == match.FirstOpponent.ToString() && teamName2 == match.SecondOpponent.ToString())
+                if(teamName1 == matches[i].FirstOpponent.ToString() && 
+                    teamName2 == matches[i].SecondOpponent.ToString())
                 {
                     getMatch = matches[i];
                 }
@@ -27,34 +27,41 @@ namespace TournamentLib
 
         public bool IsMatchesFinished()
         {
-            
-            return false;
+            bool finished = false;
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                if(matches[i].Winner != null)
+                {
+                    finished = true;
+                }
+            }
+
+            return finished;
         }
 
         public List<Team> GetWinningTeams()
         {
-            // TODO: Implement this method
             List<Team> winningTeams = new List<Team>();
             for (int i = 0; i < matches.Count; i++)
             {
-                winningTeams.Add(match.Winner);
+                winningTeams.Add(matches[i].Winner);
             }
             return winningTeams;
         }
 
         public List<Team> GetLosingTeams()
         {
-            // TODO: Implement this method
             List<Team> losingTeams = new List<Team>();
             for (int i = 0; i < matches.Count; i++)
             {
-                if(match.Winner == match.FirstOpponent)
+                if(matches[i].Winner == matches[i].FirstOpponent)
                 {
-                    losingTeams.Add(match.SecondOpponent);
+                    losingTeams.Add(matches[i].SecondOpponent);
                 }
-                else if(match.Winner == match.SecondOpponent)
+                else if(matches[i].Winner == matches[i].SecondOpponent)
                 {
-                    losingTeams.Add(match.FirstOpponent);
+                    losingTeams.Add(matches[i].FirstOpponent);
                 }
             }
             return losingTeams;
