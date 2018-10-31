@@ -5,6 +5,7 @@ using TournamentLib;
 using System.Reflection;
 using System.Text;
 
+
 namespace DragonsLair
 {
     public class Controller
@@ -53,7 +54,7 @@ namespace DragonsLair
         public void ScheduleNewRound(string tournamentName, bool printNewMatches = true)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            tournament.SetupTestTeams(); // Setup 8 teams
+            //tournament.SetupTestTeams();
             Round newRound = new Round();
             Match newMatch;
             
@@ -74,7 +75,6 @@ namespace DragonsLair
 
             if(isRoundFinished)
             {
-
                 if (lastRound != null)
                 {
                     tempTeams = tournament.GetRound(numberOfRound).GetWinningTeams();
@@ -128,16 +128,30 @@ namespace DragonsLair
             }
         }
 
-        public void SaveMatch(string tournamentName, int roundNumber, string team1, string team2, string winningTeam)
+        public void SaveMatch(string tournamentName, int roundNumber, string winningTeam)
         {
-            // Do not implement this method
+            TournamentRepo t = new TournamentRepo();
+            Tournament tournament = t.GetTournament(tournamentName);
+            Round r = tournament.GetRound(roundNumber);
+            Match m = r.GetMatch(winningTeam);
+            Team w;
+
+            if (m != null && m.Winner == null)
+            {
+                w = tournament.GetTeam(winningTeam);
+                w = m.Winner;
+            }
+            else
+            {
+                Console.WriteLine("failure");
+            }
         }
 
         public string paddedText(string text, int length)
         {
             int runs = 0;
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < length - text.Length / 2; i++)
+            for (int i = 0; i < (length - text.Length) / 2; i++)
             {
                 sb.Append(" ");
                 runs++;
