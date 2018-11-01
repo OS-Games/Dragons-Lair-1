@@ -19,7 +19,7 @@ namespace TournamentLib
         {
             Team team = null;
 
-            for (int i = 0; i <= teams.Count; i++)
+            for (int i = 0; i < teams.Count; i++)
             {
                 if (teamName == teams[i].ToString())
                 {

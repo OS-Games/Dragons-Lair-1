@@ -54,21 +54,22 @@ namespace DragonsLair
         public void ScheduleNewRound(string tournamentName, bool printNewMatches = true)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            //tournament.SetupTestTeams();
+            tournament.SetupTestTeams(); // Setup 8 teams
             Round newRound = new Round();
             Match newMatch;
             
-            List<Team> tempTeams = new List<Team>(tournament.GetTeams());
+            List<Team> tempTeams;
             List<Team> newTeams = new List<Team>();
 
             int numberOfRound = tournament.GetNumberOfRounds();
             Round lastRound = null;
-            Random rnd = new Random();
+            Random random = new Random();
             bool isRoundFinished = true;
             Team freeRider = null;
 
             if (numberOfRound != 0)
             {
+                numberOfRound--;
                 lastRound = tournament.GetRound(numberOfRound);
                 isRoundFinished = tournament.GetRound(numberOfRound).IsMatchesFinished();
             }
@@ -77,8 +78,15 @@ namespace DragonsLair
             {
                 if (lastRound != null)
                 {
-                    tempTeams = tournament.GetRound(numberOfRound).GetWinningTeams();
-                    tempTeams.Add(tournament.GetRound(numberOfRound).FreeRider);
+                    tempTeams = new List<Team>(tournament.GetRound(numberOfRound).GetWinningTeams());
+                    if(tournament.GetRound(numberOfRound).FreeRider != null)
+                    {
+                        tempTeams.Add(tournament.GetRound(numberOfRound).FreeRider);
+                    }
+                } 
+                else
+                {
+                    tempTeams = new List<Team>(tournament.GetTeams());
                 }
                 
                 while(tempTeams.Count >= 1)
@@ -92,13 +100,13 @@ namespace DragonsLair
                     {
                         newMatch = new Match();
 
-                        int rndNumber1 = rnd.Next(tempTeams.Count);
-                        Team team1 = tempTeams[rndNumber1];
-                        tempTeams.RemoveAt(rndNumber1);
+                        int randomNumber1 = random.Next(tempTeams.Count);
+                        Team team1 = tempTeams[randomNumber1];
+                        tempTeams.RemoveAt(randomNumber1);
 
-                        int rndNumber2 = rnd.Next(tempTeams.Count);
-                        Team team2 = tempTeams[rndNumber2];
-                        tempTeams.RemoveAt(rndNumber2);
+                        int randomNumber2 = random.Next(tempTeams.Count);
+                        Team team2 = tempTeams[randomNumber2];
+                        tempTeams.RemoveAt(randomNumber2);
 
                         newMatch.FirstOpponent = team1;
                         newMatch.SecondOpponent = team2;
@@ -114,13 +122,13 @@ namespace DragonsLair
             if(printNewMatches == true)
             { 
                 Console.WriteLine("0-------------------------------------------0");
-                printLine("Turnering: " + tournamentName);
-                printLine("Runde: " + numberOfRound + 1);
-                printLine(newTeams.Count / 2 + " kampe");
+                PrintLine("Turnering: " + tournamentName);
+                PrintLine("Runde: " + numberOfRound + 1);
+                PrintLine(newTeams.Count / 2 + " kampe");
                 Console.WriteLine("0-------------------------------------------0");
                 for (int i = 0; i < newTeams.Count; i++)
                 {
-                    printLine(paddedText(newTeams[i].Name, 20) + " - " + paddedText(newTeams[i + 1].Name, 20));
+                    PrintLine(PaddedText(newTeams[i].Name, 20) + " - " + PaddedText(newTeams[i + 1].Name, 20));
                     i++;
                 }
                 Console.WriteLine("0-------------------------------------------0");
@@ -130,24 +138,23 @@ namespace DragonsLair
 
         public void SaveMatch(string tournamentName, int roundNumber, string winningTeam)
         {
-            TournamentRepo t = new TournamentRepo();
-            Tournament tournament = t.GetTournament(tournamentName);
-            Round r = tournament.GetRound(roundNumber);
+            Tournament tournament = tournamentRepository.GetTournament(tournamentName);
+            Round r = tournament.GetRound(roundNumber - 1);
             Match m = r.GetMatch(winningTeam);
-            Team w;
 
-            if (m != null && m.Winner == null)
+            if (m != null)
             {
-                w = tournament.GetTeam(winningTeam);
-                w = m.Winner;
+                Team w = tournament.GetTeam(winningTeam);
+                m.Winner = w;
+                Console.WriteLine($@"Kampen mellem '{m.FirstOpponent.ToString()}' og '{m.SecondOpponent.ToString()}' i runde {roundNumber} i turneringen '{tournamentName}' er nu afviklet. Vinderen blev '{m.Winner.ToString()}'.");
             }
             else
             {
-                Console.WriteLine("failure");
+                Console.WriteLine($@"Holdet '{winningTeam}' kan ikke være vinder i runde {roundNumber}, da holdet enten ikke deltager i runde {roundNumber} eller kampen allerede er registreret med en vinder.");
             }
         }
 
-        public string paddedText(string text, int length)
+        public string PaddedText(string text, int length)
         {
             int runs = 0;
             StringBuilder sb = new StringBuilder();
@@ -167,9 +174,9 @@ namespace DragonsLair
             }
         }
 
-        public void printLine(string text)
+        public void PrintLine(string text)
         {
-            Console.WriteLine("|" + paddedText(text, 43) + "|");
+            Console.WriteLine("|" + PaddedText(text, 43) + "|");
         }
     }
 }

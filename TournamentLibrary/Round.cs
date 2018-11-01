@@ -30,9 +30,9 @@ namespace TournamentLib
         {
             Match match = null;
 
-            for (int i = 0; i <= matches.Count; i++)
+            for (int i = 0; i < matches.Count; i++)
             {
-                if(team == matches[i].FirstOpponent.ToString() || 
+                if (team == matches[i].FirstOpponent.ToString() ||
                     team == matches[i].SecondOpponent.ToString())
                 {
                     match = matches[i];
