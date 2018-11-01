@@ -24,37 +24,58 @@ namespace DragonsLair
             List<Team> teams = tournament.GetTeams();
             List<string> sortedList = new List<string>();
 
+            int countedTeams = teams.Count;
             int rounds = tournament.GetNumberOfRounds();
             for (int i = 0; i < rounds; i++)
             {
                 List<Team> winners = tournament.GetRound(i).GetWinningTeams();
-                foreach (Team winner in winners)
+                if(winners[0] != null)
                 {
-                    for (int j = 0; j < tournament.GetTeams().Count; j++)
+                    foreach (Team winner in winners)
                     {
-                        if (winner.Name == tournament.GetTeams()[j].Name)
+                        for (int j = 0; j < tournament.GetTeams().Count; j++)
                         {
-                            points[j] = points[j] + 1;
+                            if (winner.Name == tournament.GetTeams()[j].Name)
+                            {
+                                points[j] = points[j] + 1;
+                            }
                         }
                     }
                 }
+                
             }
+            
 
-            while (points.Count > 0)
+
+            Console.WriteLine("  #####                                        ");
+            Console.WriteLine(" #     # ##### # #      #      # #    #  ####  ");
+            Console.WriteLine(" #         #   # #      #      # ##   # #    # ");
+            Console.WriteLine("  #####    #   # #      #      # # #  # #      ");
+            Console.WriteLine("       #   #   # #      #      # #  # # #  ### ");
+            Console.WriteLine(" #     #   #   # #      #      # #   ## #    # ");
+            Console.WriteLine("  #####    #   # ###### ###### # #    #  ####  ");
+
+            Console.WriteLine("0-------------------------------------------0");
+            PrintLine("Turnering: " + tournamentName);
+            PrintLine("Spillede runder: " + rounds);
+            PrintLine("Spillede kampe: " + "Ehh??");
+            Console.WriteLine("|----------------------------| VUNDNE KAMPE |");
+            for (int i = 0; i < countedTeams; i++)
             {
                 int index = points.IndexOf(points.Max());
-                sortedList.Add(teams[index].ToString() + ": " + points[index]);
+                PrintLine(PaddedText(teams[index].ToString(), 27) + " - " + PaddedText(points[index].ToString(), 13));
+
                 points.RemoveAt(index);
                 teams.RemoveAt(index);
             }
-
-            sortedList.ForEach(Console.WriteLine);
+            Console.WriteLine("0-------------------------------------------0");
+            Console.ReadLine();
         }
 
         public void ScheduleNewRound(string tournamentName, bool printNewMatches = true)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            tournament.SetupTestTeams(); // Setup 8 teams
+            tournament.SetupTestTeams(); // Bruges til at teste menuen, udkommenter ved test
             Round newRound = new Round();
             Match newMatch;
             
@@ -123,7 +144,7 @@ namespace DragonsLair
             { 
                 Console.WriteLine("0-------------------------------------------0");
                 PrintLine("Turnering: " + tournamentName);
-                PrintLine("Runde: " + numberOfRound + 1);
+                PrintLine("Runde: " + numberOfRound);
                 PrintLine(newTeams.Count / 2 + " kampe");
                 Console.WriteLine("0-------------------------------------------0");
                 for (int i = 0; i < newTeams.Count; i++)
@@ -139,7 +160,7 @@ namespace DragonsLair
         public void SaveMatch(string tournamentName, int roundNumber, string winningTeam)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            Round r = tournament.GetRound(roundNumber - 1);
+            Round r = tournament.GetRound(roundNumber);
             Match m = r.GetMatch(winningTeam);
 
             if (m != null)
