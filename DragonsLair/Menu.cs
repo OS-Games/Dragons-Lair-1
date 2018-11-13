@@ -97,7 +97,8 @@ namespace DragonsLair
             Console.Write("Angiv navn på turnering: ");
             string tournamentName = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine(teamName + " Er nu tilmeldt " + tournamentName);
+            Console.WriteLine("Holdet: " + teamName);
+            Console.WriteLine("Er nu tilmeldt turneringen: " + tournamentName);
             Console.ReadLine();
             Console.Clear();
             control.AddTeamToTournament(teamName, tournamentName);
