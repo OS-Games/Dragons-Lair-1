@@ -19,15 +19,19 @@ namespace DragonsLair
                         running = false;
                         break;
                     case "1":
+                        Console.Clear();
                         ShowScore();
                         break;
                     case "2":
+                        Console.Clear();
                         ScheduleNewRound();
                         break;
                     case "3":
+                        Console.Clear();
                         SaveMatch();
                         break;
                     case "4":
+                        Console.Clear();
                         AddTeamToTournament();
                         break;
                     default:
@@ -45,7 +49,7 @@ namespace DragonsLair
             Console.WriteLine("1. Præsenter turneringsstilling");
             Console.WriteLine("2. Planlæg runde i turnering");
             Console.WriteLine("3. Registrér afviklet kamp");
-            Console.WriteLine("4. Tilføj hold til turnering");
+            Console.WriteLine("4. Tilmeld hold til turnering");
             Console.WriteLine("");
             Console.WriteLine("0. Exit");
         }
@@ -87,11 +91,13 @@ namespace DragonsLair
 
         private void AddTeamToTournament()
         {
-            Console.Write("Angiv navn på hold");
+            Console.Write("Angiv navn på hold: ");
             string teamName = Console.ReadLine();
             Console.Clear();
-            Console.Write("Angiv navn på turnering");
+            Console.Write("Angiv navn på turnering: ");
             string tournamentName = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Hold er tilmeldt turneringen");
             Console.Clear();
             control.AddTeamToTournament(teamName, tournamentName);
         }
