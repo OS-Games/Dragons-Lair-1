@@ -163,6 +163,7 @@ namespace DragonsLair
             }
         }
 
+
         public void SaveMatch(string tournamentName, int roundNumber, string winningTeam)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
@@ -179,6 +180,13 @@ namespace DragonsLair
             {
                 Console.WriteLine($@"Holdet '{winningTeam}' kan ikke være vinder i runde {roundNumber}, da holdet enten ikke deltager i runde {roundNumber} eller kampen allerede er registreret med en vinder.");
             }
+        }
+
+        public void AddTeamToTournament(string teamName, string tournamentName)
+        {
+            Tournament tournament = tournamentRepository.GetTournament(tournamentName);
+            Team team = new Team(teamName);
+            tournament.AddTeam(team);
         }
 
         public string PaddedText(string text, int length)
