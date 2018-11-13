@@ -75,7 +75,7 @@ namespace DragonsLair
         public void ScheduleNewRound(string tournamentName, bool printNewMatches = true)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            tournament.SetupTestTeams(); // Bruges til at teste menuen, udkommenter ved test
+            //tournament.SetupTestTeams(); // Bruges til at teste menuen, udkommenter ved test
             Round newRound = new Round();
             Match newMatch;
             
@@ -121,13 +121,19 @@ namespace DragonsLair
                     {
                         newMatch = new Match();
 
-                        int randomNumber1 = random.Next(tempTeams.Count);
-                        Team team1 = tempTeams[randomNumber1];
-                        tempTeams.RemoveAt(randomNumber1);
+                        // Da unittesten ikke tager højde for random genererede kampe, kan dette ikke gøres
+                        //int randomNumber1 = random.Next(tempTeams.Count);
+                        //Team team1 = tempTeams[randomNumber1];
+                        //tempTeams.RemoveAt(randomNumber1);
 
-                        int randomNumber2 = random.Next(tempTeams.Count);
-                        Team team2 = tempTeams[randomNumber2];
-                        tempTeams.RemoveAt(randomNumber2);
+                        //int randomNumber2 = random.Next(tempTeams.Count);
+                        //Team team2 = tempTeams[randomNumber2];
+                        //tempTeams.RemoveAt(randomNumber2);
+
+                        Team team1 = tempTeams[0];
+                        tempTeams.RemoveAt(0);
+                        Team team2 = tempTeams[0];
+                        tempTeams.RemoveAt(0);
 
                         newMatch.FirstOpponent = team1;
                         newMatch.SecondOpponent = team2;
