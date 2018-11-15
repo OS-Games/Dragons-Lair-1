@@ -4,7 +4,9 @@ namespace TournamentLib
 {
     public class TournamentRepo
     {
+
         private Tournament winterTournament = new Tournament("Vinter Turnering");
+        private Tournament summerTournament = new Tournament("Sommer Turnering");
 
         public Tournament GetTournament(string name)
         {
@@ -12,6 +14,11 @@ namespace TournamentLib
             {
                 return winterTournament;
             }
+            if (name == "Sommer Turnering")
+            {
+                return summerTournament;
+            }
+            
             return null;
         }
     }

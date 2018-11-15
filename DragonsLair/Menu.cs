@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using TournamentLib;
 
 namespace DragonsLair
 {
@@ -79,6 +81,7 @@ namespace DragonsLair
 
         private void SaveMatch()
         {
+            
             Console.Write("Angiv navn på turnering: ");
             string tournamentName = Console.ReadLine();
             Console.Write("Angiv runde: ");
@@ -91,15 +94,10 @@ namespace DragonsLair
 
         private void AddTeamToTournament()
         {
-            Console.Write("Angiv navn på hold: ");
-            string teamName = Console.ReadLine();
-            Console.Clear();
             Console.Write("Angiv navn på turnering: ");
             string tournamentName = Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine("Holdet: " + teamName);
-            Console.WriteLine("Er nu tilmeldt turneringen: " + tournamentName);
-            Console.ReadLine();
+            Console.Write("Angiv navn på hold: ");
+            string teamName = Console.ReadLine();
             Console.Clear();
             control.AddTeamToTournament(teamName, tournamentName);
         }

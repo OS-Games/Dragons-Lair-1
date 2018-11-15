@@ -28,6 +28,7 @@ namespace TournamentLib
             }
             return team;
         }
+
         public void AddTeam(Team team)
         {
             teams.Add(team);

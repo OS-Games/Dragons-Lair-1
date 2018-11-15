@@ -185,8 +185,24 @@ namespace DragonsLair
         public void AddTeamToTournament(string teamName, string tournamentName)
         {
             Tournament tournament = tournamentRepository.GetTournament(tournamentName);
-            Team team = new Team(teamName);
-            tournament.AddTeam(team);
+
+            if (tournament != null)
+            {
+                Team team = new Team(teamName);
+                tournament.AddTeam(team);
+                Console.WriteLine(team.Name + " er blevet tilføjet til turneringen, " + tournament.Name);
+            }
+            else
+            {
+                Console.WriteLine("Turneringen du prøver at tilføje et hold til findes ikke.");
+            }
+            Console.ReadLine();
+        }
+
+        public void CreateTournament(string tournamentName)
+        {
+            TournamentRepo tournamentRepo = new TournamentRepo();
+            
         }
 
         public string PaddedText(string text, int length)
