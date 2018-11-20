@@ -8,6 +8,7 @@ namespace DragonsLair
     {
         private Controller control = new Controller();
         
+        
         public void Show()
         {
             bool running = true;
@@ -22,17 +23,21 @@ namespace DragonsLair
                         break;
                     case "1":
                         Console.Clear();
-                        ShowScore();
+                        CreateTournament();
                         break;
                     case "2":
                         Console.Clear();
-                        ScheduleNewRound();
+                        ShowScore();
                         break;
                     case "3":
                         Console.Clear();
-                        SaveMatch();
+                        ScheduleNewRound();
                         break;
                     case "4":
+                        Console.Clear();
+                        SaveMatch();
+                        break;
+                    case "5":
                         Console.Clear();
                         AddTeamToTournament();
                         break;
@@ -44,14 +49,17 @@ namespace DragonsLair
             } while (running);
         }
 
+
+
         private void ShowMenu()
         {
             Console.WriteLine("Dragons Lair");
             Console.WriteLine();
-            Console.WriteLine("1. Præsenter turneringsstilling");
-            Console.WriteLine("2. Planlæg runde i turnering");
-            Console.WriteLine("3. Registrér afviklet kamp");
-            Console.WriteLine("4. Tilmeld hold til turnering");
+            Console.WriteLine("1. Skab ny turnering");
+            Console.WriteLine("2. Præsenter turneringsstilling");
+            Console.WriteLine("3. Planlæg runde i turnering");
+            Console.WriteLine("4. Registrér afviklet kamp");
+            Console.WriteLine("5. Tilmeld hold til turnering");
             Console.WriteLine("");
             Console.WriteLine("0. Exit");
         }
@@ -100,6 +108,14 @@ namespace DragonsLair
             string teamName = Console.ReadLine();
             Console.Clear();
             control.AddTeamToTournament(teamName, tournamentName);
+        }
+
+        private void CreateTournament()
+        {
+            Console.Write("Navn på turnering: ");
+            string tournamentName = Console.ReadLine();
+            Console.Clear();
+            control.CreateTournament(tournamentName);
         }
     }
 }

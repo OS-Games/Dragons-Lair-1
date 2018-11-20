@@ -5,21 +5,29 @@ namespace TournamentLib
     public class TournamentRepo
     {
 
-        private Tournament winterTournament = new Tournament("Vinter Turnering");
-        private Tournament summerTournament = new Tournament("Sommer Turnering");
+        List<Tournament> tournaments = new List<Tournament>();
 
         public Tournament GetTournament(string name)
         {
-            if (name == "Vinter Turnering")
-            {
-                return winterTournament;
-            }
-            if (name == "Sommer Turnering")
-            {
-                return summerTournament;
-            }
             
+            for (int i = 0; i < tournaments.Count; i++)
+            {
+                if (name == tournaments[i].Name)
+                {
+                    return tournaments[i];
+                }
+            }
             return null;
+        }
+
+        public List<Tournament> GetTournaments()
+        {
+            return tournaments;
+        }
+
+        public void AddTournament(Tournament tournament)
+        {
+            tournaments.Add(tournament);
         }
     }
 }

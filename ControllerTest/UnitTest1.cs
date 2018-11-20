@@ -16,6 +16,7 @@ namespace ControllerTest
         public void SetupForTest()
         {
             controller = new Controller();
+            controller.CreateTournament("Vinter Turnering");
             currentRepo = controller.GetTournamentRepository();
             currentTournament = currentRepo.GetTournament("Vinter Turnering");
             currentTournament.SetupTestTeams(); // Setup 8 teams

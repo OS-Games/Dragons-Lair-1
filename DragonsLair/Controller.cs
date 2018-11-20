@@ -201,7 +201,19 @@ namespace DragonsLair
 
         public void CreateTournament(string tournamentName)
         {
-            TournamentRepo tournamentRepo = new TournamentRepo();
+            List<Tournament> tournaments = new List<Tournament>(tournamentRepository.GetTournaments());
+            Tournament tournamentChecker = tournamentRepository.GetTournament(tournamentName);
+            Tournament newTournament = new Tournament(tournamentName);
+
+            if (tournamentChecker == null)
+            {
+                tournamentRepository.AddTournament(newTournament);
+                Console.WriteLine("Turnering tilføjet");
+            }
+            else
+            {
+                Console.WriteLine("Turnering findes allerede");
+            }
             
         }
 
